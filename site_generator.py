@@ -35,11 +35,10 @@ def make_dirs():
     except OSError:
         pass
     for entry in os.scandir(ARTICLES_DIR):
-        if entry.is_dir:
-            try:
-                os.makedirs(os.path.join(OUTPUT_DIR, entry.name))
-            except OSError:
-                continue
+        try:
+            os.makedirs(os.path.join(OUTPUT_DIR, entry.name))
+        except OSError:
+            continue
 
 
 def make_index(config):
