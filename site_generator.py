@@ -56,7 +56,7 @@ def make_index(config):
         template = jinja2.Template(template_file.read())
         for article in config['articles']:
             article['title'] = screen_string(article['title'])
-            article['html_source'] = article['source'].replace('.md', '.html').replace('&', '')
+            article['html_source'] = article['source'].replace('.md', '.html').replace(' &amp; ', '_amp_')
         index_path = os.path.join(OUTPUT_DIR, 'index.html')
         save_page(config, index_path, template)
 
