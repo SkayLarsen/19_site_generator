@@ -51,7 +51,7 @@ def make_index(config):
     with open(INDEX_TEMPLATE, encoding='utf-8') as template_file:
         template = jinja2.Template(template_file.read())
         for article in config['articles']:
-            article['html_source'] = os.path.join(OUTPUT_DIR, article['source']).replace('.md', '.html')
+            article['html_source'] = article['source'].replace('.md', '.html')
         index_path = os.path.join(OUTPUT_DIR, 'index.html')
         save_page(config, index_path, template)
 
@@ -61,8 +61,9 @@ def make_articles(config):
         template = jinja2.Template(template_file.read())
         for article in config['articles']:
             article_md_path = os.path.join(ARTICLES_DIR, article['source'])
+            article_html_path = os.path.join(OUTPUT_DIR, article['html_source'])
             article['text'] = html_from_markdown(load_markdown(article_md_path))
-            save_page(article, article['html_source'], template)
+            save_page(article, article_html_path, template)
 
 
 if __name__ == '__main__':
