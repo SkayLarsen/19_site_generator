@@ -18,11 +18,16 @@ def load_config(path):
         return json.load(config_file)
 
 
-def html_from_markdown(path):
+def load_markdown(path):
     if not os.path.exists(path):
         return None
     with open(path, 'r', encoding='utf-8') as md_file:
-        return markdown.markdown(md_file.read(), extensions=['codehilite', 'fenced_code'])
+        return md_file.read()
+
+
+def html_from_markdown(md_content):
+    if md_content:
+        return markdown.markdown(md_content, extensions=['codehilite', 'fenced_code'])
 
 
 def save_page(config, path, template):
@@ -56,7 +61,7 @@ def make_articles(config):
         template = jinja2.Template(template_file.read())
         for article in config['articles']:
             article_md_path = os.path.join(ARTICLES_DIR, article['source'])
-            article['text'] = html_from_markdown(article_md_path)
+            article['text'] = html_from_markdown(load_markdown(article_md_path))
             save_page(article, article['html_source'], template)
 
 
