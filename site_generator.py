@@ -3,6 +3,7 @@ import jinja2
 import json
 import markdown
 import os
+import sys
 
 ARTICLES_DIR = 'articles'
 INDEX_TEMPLATE = 'templates/index.html'
@@ -65,7 +66,7 @@ if __name__ == '__main__':
     args = argparser.parse_args()
     config = load_config(args.configpath)
     if not config:
-        print("Указанный конфигурационный файл не найден.")
+        sys.exit(1)
     else:
         make_dirs()
         make_index(config)
