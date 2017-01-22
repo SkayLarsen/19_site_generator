@@ -34,6 +34,10 @@ def save_page(config, path, template):
     with open(path, 'w', encoding='utf-8') as out_page:
         out_page.write(template.render(info=config))
 
+def screen_string(string):
+    string = str(string)
+    string = string.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+    return string
 
 def make_dirs():
     try:
@@ -51,6 +55,7 @@ def make_index(config):
     with open(INDEX_TEMPLATE, encoding='utf-8') as template_file:
         template = jinja2.Template(template_file.read())
         for article in config['articles']:
+            article['title'] = screen_string(article['title'])
             article['html_source'] = article['source'].replace('.md', '.html')
         index_path = os.path.join(OUTPUT_DIR, 'index.html')
         save_page(config, index_path, template)
