@@ -68,6 +68,7 @@ def make_articles(config):
             article_md_path = os.path.join(ARTICLES_DIR, article['source'])
             article_html_path = os.path.join(OUTPUT_DIR, article['html_source'])
             article['text'] = html_from_markdown(load_markdown(article_md_path))
+            article['index_link'] = '"../index.html"'
             save_page(article, article_html_path, template)
 
 
